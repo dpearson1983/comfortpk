@@ -37,6 +37,27 @@ double cosmology::rz(double z, void *params) {
     return D;
 }
 
+cosmology::cosmology() {
+    cosmology::Om_M = 0.3;
+    cosmology::Om_L = 0.7;
+    cosmology::Om_b = 0.04;
+    cosmology::Om_c = 0.26;
+    cosmology::tau = 0.066
+    cosmology::T_CMB = 2.718;
+    cosmology::h = 0.7;
+    cosmology::acc = gsl_interp_accel_alloc();
+    cosmology::r2z = gsl_spline_alloc(gsl_interp_cspline, 1001);
+    std::vector<double> z;
+    std::vector<double> r;
+    double dz = 10.0/1000.0;
+    cosmology::w = gsl_integration_workspace_alloc(1000000);
+    for (int i = 0; i <= 1000; ++i) {
+        z.push_back(i*dz);
+        r.push_back(cosmology::comoving_distance(i*dz));
+    }
+    gsl_spline_init(cosmology::r2z, r.data(), z.data(), z.size());
+}
+
 cosmology::cosmology(double H_0, double OmegaM, double OmegaL, double Omegab, double Omegac, double Tau,
                      double TCMB) {
     cosmology::Om_M = OmegaM;

@@ -23,10 +23,15 @@ class cosmology{
     double k_eq();
     
     public:
+        cosmology();
+        
         cosmology(double H_0 = 70.0, double OmegaM = 0.3, double OmegaL = 0.7, double Omegab = 0.04, 
                   double Omegac = 0.26, double Tau = 0.066, double TCMB = 2.718);
         
         ~cosmology();
+        
+        void set(double H_0 = 70.0, double OmegaM = 0.3, double OmegaL = 0.7, double Omegab = 0.04, 
+                  double Omegac = 0.26, double Tau = 0.066, double TCMB = 2.718);
         
         double Omega_M();
         

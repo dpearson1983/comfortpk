@@ -3,7 +3,9 @@
 
 #include <vector>
 #include <string>
-#include "pods.h"
+#include "pods.hpp"
+#include "cosmology.hpp"
+#include "galaxy.hpp"
 
 enum class fileType{
     patchy,
@@ -19,32 +21,39 @@ class fileReader{
     
     std::string filename(std::string base, int digits, int num, std::string ext);
     
-    std::vector<double4> readPatchyGals(std::string file);
+    std::vector<galaxy> readPatchyGals(std::string file);
     
-    std::vector<double4> readPatchyRans(std::string file);
+    std::vector<galaxy> readPatchyRans(std::string file);
     
-    std::vector<double4> readDR12Gals(std::string file);
+    std::vector<galaxy> readDR12Gals(std::string file);
     
-    std::vector<double4> readDR12Rans(std::string file);
+    std::vector<galaxy> readDR12Rans(std::string file);
     
     public:
+        cosmology cosmo;
+        
         fileReader();
         
-        fileReader(fileType type, int startNum = 1);
+        fileReader(fileType type, cosmology cosmo = cosmology::cosmology(), int startNum = 1);
         
-        fileReader(fileType type, std::string base, std::string ext, int digits, int startNum = 1);
+        fileReader(fileType type, std::string base, std::string ext, int digits, 
+                   cosmology cosmo = cosmology::cosmology(), int startNum = 1);
         
-        void init(fileType type, int startNum = 1);
+        void init(fileType type, cosmology cosmo = cosmology::cosmology(), int startNum = 1);
         
-        void init(fileType type, std::string base, std::string ext, int digits, int startNum = 1);
+        void init(fileType type, std::string base, std::string ext, int digits, 
+                  cosmology cosmo = cosmology::cosmology(), int startNum = 1);
         
-        std::vector<double4> readGals();
+        void setCosmology(double H_0, double Omega_M, double Omega_L, double Omega_b, double Omega_c,
+                          double Tau, double TCMB);
         
-        std::vector<double4> readGals(std::string file);
+        std::vector<galaxy> readGals();
         
-        std::vector<double4> readGals(std::string base, int digits, int num, std::string ext);
+        std::vector<galaxy> readGals(std::string file);
         
-        std::vector<double4> readRans(std::string file);
+        std::vector<galaxy> readGals(std::string base, int digits, int num, std::string ext);
+        
+        std::vector<galaxy> readRans(std::string file);
         
 };
         
